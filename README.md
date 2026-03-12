@@ -1,6 +1,6 @@
 # Student Academic Tracker Web Application
 
-A full-stack academic tracking application built with **Next.js App Router**, **TypeScript**, **Prisma ORM**, and **SQLite**.
+A full-stack academic tracking application built with **Next.js App Router**, **TypeScript**, **Prisma ORM**, and **MySQL**.
 
 ## Features
 
@@ -19,7 +19,7 @@ A full-stack academic tracking application built with **Next.js App Router**, **
 
 - Frontend: Next.js (App Router), React, Tailwind CSS
 - Backend: Next.js API routes (Node.js runtime)
-- Database: SQLite
+- Database: MySQL
 - ORM: Prisma
 - Language: TypeScript
 
@@ -55,10 +55,10 @@ npm install
 cp .env.example .env
 ```
 
-3. Update `.env` with your SQLite path and JWT secret
+3. Update `.env` with your MySQL credentials and JWT secret
 
 ```env
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="mysql://root:password@localhost:3306/student_tracker"
 JWT_SECRET="your_secure_secret"
 ```
 
