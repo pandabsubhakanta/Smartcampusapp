@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  courses   Course[]
+}
+
+model Course {
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  name          String
+  credits       Int         @default(0)
+  gradingScheme String      @default("10-point")
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attendance    Attendance?
+  grade         Grade?
+  margin        Margin?
+  createdAt     DateTime    @default(now())
+
+  @@unique([userId, name])
+}
+
+model Attendance {
+  id              Int    @id @default(autoincrement())
+  courseId         Int    @unique
+  classesHeld      Int    @default(0)
+  classesAttended  Int    @default(0)
+  course           Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Grade {
+  id       Int    @id @default(autoincrement())
+  courseId Int    @unique
+  grade    Float  @default(0)
+  credits  Int    @default(0)
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Margin {
+  id              Int    @id @default(autoincrement())
+  courseId         Int    @unique
+  internalMarks    Float  @default(0)
+  assignmentMarks  Float  @default(0)
+  examMarks        Float  @default(0)
+  totalMarks       Float  @default(100)
+  targetMarks      Float  @default(75)
+  course           Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
